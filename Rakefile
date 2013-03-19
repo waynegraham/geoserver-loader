@@ -44,15 +44,15 @@ task :web_services, :arg1, :arg2 do |task, args|
   workspace = args[:arg2]
 
   Dir[glob_pattern].each do |file|
-    coverage = File.base_file(file, 'tif.zip')
+    coverage = File.basename(file, 'tif.zip')
     server_path = "#{ENV['server']}/workspaces/#{workspace}/coveragestores/#{coverage}/file.geotiff"
     command = "curl -u #{ENV['user']}:#{ENV['password']} -XPUT -H 'Content-type: application/zip --data-binary @#{file} #{server_path}"
     puts command
   end
 end
 
-def make_zip_dir
-  
+def make_dir(path)
+  FileUtils.mkdir_p path
 end
 
 def zip_files(pattern)
