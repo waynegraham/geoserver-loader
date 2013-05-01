@@ -34,7 +34,8 @@ task :remove_border, :arg1 do |task, args|
     command = "gdalwarp -srcnodata 0 -dstalpha #{file} #{warp_file}\n"
     command += "gdal_translate -of GTiff -a_srs EPSG:4326 #{warp_file} #{translate_file}\n"
     #command += "gdalwarp -rc -s_srs 'EPSG:4326' -t_srs 'EPSG:900913'  #{translate_file} #{final_file}\n"
-    puts command
+    #puts command
+    `command`
   end
 end
 
@@ -47,7 +48,8 @@ task :web_services, :arg1, :arg2 do |task, args|
     coverage = File.basename(file, 'tif.zip')
     server_path = "#{ENV['server']}/workspaces/#{workspace}/coveragestores/#{coverage}/file.geotiff"
     command = "curl -u #{ENV['user']}:#{ENV['password']} -XPUT -H 'Content-type: application/zip --data-binary @#{file} #{server_path}"
-    puts command
+    `command`
+    #puts command
   end
 end
 
